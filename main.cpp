@@ -162,11 +162,11 @@ int main ( void )
 {
     uint8_t       * p0, *p1, *p2, *p3, *p4;
     int             pendingBlk;
-    static uint8_t  memPool[3 * 1048576];
-    
-    for
+//    static uint8_t  memPool[3 * 1048576];
+    uint8_t * memPool = (uint8_t *) calloc (3 * 1048576, sizeof(uint8_t));
+//    static uint8_t  memPool[3 * 1048576];
 
-    HeapInit ( memPool, 2097152 );
+    /*HeapInit ( memPool, 2097152 );
     p0 = (uint8_t*) HeapAlloc ( (2097152/2)-32 );
     p1 = (uint8_t*) HeapAlloc ( (2097152/2)-32 );
 //    printf("%i %i", p0, p1);
@@ -175,24 +175,27 @@ int main ( void )
     p0 = (uint8_t*) HeapAlloc ( 2097152-3 );
     HeapFree ( p0 );
     p0 = (uint8_t*) HeapAlloc ( 1 );
-    HeapFree ( p0 );
+    HeapFree ( p0 );*/
 
 
     HeapInit ( memPool, 1000);
     p0 = (uint8_t*) HeapAlloc ( 100 );
-    printf("%i %i", p0, p0);
+//    printf("%i %i", p0, p0);
     memset ( p0, 1, 100 );
     p1 = (uint8_t*) HeapAlloc ( 250 );
     memset ( p1, 1, 250 );
     p2 = (uint8_t*) HeapAlloc ( 450 );
-    memset ( p2, 1, 450 );
-    p3 = (uint8_t*) HeapAlloc ( 72 );
-    memset ( p3, 1, 72 );
+    memset ( p2, 1, 451 );
+    p3 = (uint8_t*) HeapAlloc ( 71 );
+    memset ( p3, 1, 71 );
+
+    for(int i=0; i < 1020; i++)
+        printf("mm   %i    %i\n", i, memPool[i]);
 //    printf("%i %i", p0, p3);
     HeapFree ( p1 );
     HeapFree ( p2 );
     p2 = (uint8_t*) HeapAlloc ( 732 );
-    memset ( p2, 0, 735 );
+    memset ( p2, 0, 732 );
 //    printf("%i %i", p3, p2);
     HeapFree ( p0 );
     p0 = (uint8_t*) HeapAlloc ( 1 );
