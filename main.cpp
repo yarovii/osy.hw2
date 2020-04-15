@@ -70,7 +70,7 @@ void * MemManager::Alloc ( int size ){
                 tmp->size = size;
                 tmp->next = localMemPool+(*tmp).index+size;
             }
-            
+
             tmp->isFree = false;
             ++countDone;
             return localMemPool+(*tmp).index;
@@ -167,15 +167,19 @@ int main ( void )
     uint8_t * memPool = (uint8_t *) calloc (2097152, sizeof(uint8_t));
 //    static uint8_t  memPool[3 * 1048576];
 
-   /* HeapInit ( memPool, 2097152 );
+    HeapInit ( memPool, 2097152 );
     p0 = (uint8_t*) HeapAlloc ( (2097152/2)-32 );
+    memset ( p0, 1, (2097152/2)-32 );
     p1 = (uint8_t*) HeapAlloc ( (2097152/2)-32 );
+    memset ( p1, 1, (2097152/2)-32 );
 //    printf("%i %i", p0, p1);
     HeapFree ( p0 );
     HeapFree ( p1 );
-    p0 = (uint8_t*) HeapAlloc ( 2097152-3 );
+    p0 = (uint8_t*) HeapAlloc ( 2097152-32 );
+    memset ( p0, 1, 2097152-32 );
     HeapFree ( p0 );
     p0 = (uint8_t*) HeapAlloc ( 1 );
+    memset ( p0, 1, 1 );
     HeapFree ( p0 );
 
 
@@ -190,7 +194,7 @@ int main ( void )
     p3 = (uint8_t*) HeapAlloc ( 71 );
     memset ( p3, 1, 71 );
 
-    *//*for(int i=0; i < 1020; i++)
+    /*for(int i=0; i < 1020; i++)
         printf("mm   %i    %i\n", i, memPool[i]);*//*
 //    printf("%i %i", p0, p3);
     HeapFree ( p1 );
@@ -240,7 +244,7 @@ int main ( void )
     //////
 
 
-    /*HeapInit ( memPool, 2359296 );
+    HeapInit ( memPool, 2359296 );
     assert ( ( p0 = (uint8_t*) HeapAlloc ( 1000000 ) ) != NULL );
     memset ( p0, 0, 1000000 );
     assert ( ( p1 = (uint8_t*) HeapAlloc ( 500000 ) ) != NULL );
@@ -262,7 +266,7 @@ int main ( void )
     memset ( p0, 0, 1000000 );
     assert ( ! HeapFree ( p0 + 1000 ) );
     HeapDone ( &pendingBlk );
-    assert ( pendingBlk == 1 );*/
+    assert ( pendingBlk == 1 );
     free(memPool);
     return 0;
 }
