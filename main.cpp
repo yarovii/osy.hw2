@@ -8,7 +8,7 @@
 using namespace std;
 #endif /* __PROGTEST__ */
 
-struct HeapMemory{
+/*struct HeapMemory{
     size_t index;   ////store index of free heap
     int size;
     bool isFree;
@@ -19,9 +19,22 @@ struct HeapMemory{
     index(index), size(size), isFree(isFree), prev(prev), next(next) {}
 
     HeapMemory(){}
-};
+};*/
 
 class MemManager {
+    
+    struct HeapMemory{
+        size_t index;   ////store index of free heap
+        int size;
+        bool isFree;
+        HeapMemory * prev;
+        uint8_t * next;
+
+        HeapMemory(size_t index, int size, bool isFree, HeapMemory * prev, uint8_t * next) :
+                index(index), size(size), isFree(isFree), prev(prev), next(next) {}
+
+        HeapMemory(){}
+    };
 
      uint8_t * localMemPool;
      uint8_t structSize;
