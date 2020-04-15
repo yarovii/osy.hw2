@@ -63,7 +63,7 @@ void MemManager::Init(void * memPool, int memSize){
     countDone = 0;
     structSize = sizeof(HeapMemory);
 
-    tmpOb = HeapMemory(structSize, memSize - structSize, true, NULL, NULL);
+    tmpOb = HeapMemory(structSize, memSize - structSize-sizeof(MemManager), true, NULL, NULL);
     memcpy(localMemPool,(uint8_t*) &tmpOb, structSize);
 }
 
@@ -176,7 +176,7 @@ int main ( void )
 //    uint8_t * memPool = (uint8_t *) calloc (2097152, sizeof(uint8_t));
 //    static uint8_t  memPool[3 * 1048576];
 
-    HeapInit ( memPool, 2097152 );
+    /*HeapInit ( memPool, 0 );
     p0 = (uint8_t*) HeapAlloc ( (2097152/2)-32 );
     memset ( p0, 1, (2097152/2)-32 );
     p1 = (uint8_t*) HeapAlloc ( (2097152/2)-32 );
@@ -203,8 +203,8 @@ int main ( void )
     p3 = (uint8_t*) HeapAlloc ( 71 );
     memset ( p3, 1, 71 );
 
-    /*for(int i=0; i < 1020; i++)
-        printf("mm   %i    %i\n", i, memPool[i]);*//**//*
+//    for(int i=0; i < 1020; i++)
+//        printf("mm   %i    %i\n", i, memPool[i]);
 //    printf("%i %i", p0, p3);
     HeapFree ( p1 );
     HeapFree ( p2 );
@@ -214,9 +214,9 @@ int main ( void )
     HeapFree ( p0 );
     p0 = (uint8_t*) HeapAlloc ( 1 );
     memset ( p0, 0, 2 );
-    HeapFree ( p0 );*/
+    HeapFree ( p0 );
 
-
+*/
 
     HeapInit ( memPool, 2097152 );
     assert ( ( p0 = (uint8_t*) HeapAlloc ( 512000 ) ) != NULL );
@@ -267,6 +267,7 @@ int main ( void )
     assert ( HeapFree ( p1 ) );
     HeapDone ( &pendingBlk );
     assert ( pendingBlk == 1 );
+    //////
 
 
     HeapInit ( memPool, 2359296 );
@@ -276,6 +277,7 @@ int main ( void )
     HeapDone ( &pendingBlk );
     assert ( pendingBlk == 1 );
 //    free(memPool);
+
     return 0;
 }
 #endif /* __PROGTEST__ */
