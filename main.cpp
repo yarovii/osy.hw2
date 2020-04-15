@@ -163,10 +163,10 @@ int main ( void )
     uint8_t       * p0, *p1, *p2, *p3, *p4;
     int             pendingBlk;
 //    static uint8_t  memPool[3 * 1048576];
-    uint8_t * memPool = (uint8_t *) calloc (3 * 1048576, sizeof(uint8_t));
+    uint8_t * memPool = (uint8_t *) calloc (2097152, sizeof(uint8_t));
 //    static uint8_t  memPool[3 * 1048576];
 
-    /*HeapInit ( memPool, 2097152 );
+    HeapInit ( memPool, 2097152 );
     p0 = (uint8_t*) HeapAlloc ( (2097152/2)-32 );
     p1 = (uint8_t*) HeapAlloc ( (2097152/2)-32 );
 //    printf("%i %i", p0, p1);
@@ -175,7 +175,7 @@ int main ( void )
     p0 = (uint8_t*) HeapAlloc ( 2097152-3 );
     HeapFree ( p0 );
     p0 = (uint8_t*) HeapAlloc ( 1 );
-    HeapFree ( p0 );*/
+    HeapFree ( p0 );
 
 
     HeapInit ( memPool, 1000);
@@ -189,8 +189,8 @@ int main ( void )
     p3 = (uint8_t*) HeapAlloc ( 71 );
     memset ( p3, 1, 71 );
 
-    for(int i=0; i < 1020; i++)
-        printf("mm   %i    %i\n", i, memPool[i]);
+    /*for(int i=0; i < 1020; i++)
+        printf("mm   %i    %i\n", i, memPool[i]);*/
 //    printf("%i %i", p0, p3);
     HeapFree ( p1 );
     HeapFree ( p2 );
@@ -239,7 +239,7 @@ int main ( void )
     //////
 
 
-    HeapInit ( memPool, 2359296 );
+    /*HeapInit ( memPool, 2359296 );
     assert ( ( p0 = (uint8_t*) HeapAlloc ( 1000000 ) ) != NULL );
     memset ( p0, 0, 1000000 );
     assert ( ( p1 = (uint8_t*) HeapAlloc ( 500000 ) ) != NULL );
@@ -261,8 +261,8 @@ int main ( void )
     memset ( p0, 0, 1000000 );
     assert ( ! HeapFree ( p0 + 1000 ) );
     HeapDone ( &pendingBlk );
-    assert ( pendingBlk == 1 );
-
+    assert ( pendingBlk == 1 );*/
+    free(memPool);
     return 0;
 }
 #endif /* __PROGTEST__ */
