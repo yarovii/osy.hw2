@@ -163,8 +163,8 @@ int main ( void )
 {
     uint8_t       * p0, *p1, *p2, *p3, *p4;
     int             pendingBlk;
-//    static uint8_t  memPool[3 * 1048576];
-    uint8_t * memPool = (uint8_t *) calloc (2097152, sizeof(uint8_t));
+    static uint8_t  memPool[3 * 1048576];
+//    uint8_t * memPool = (uint8_t *) calloc (2097152, sizeof(uint8_t));
 //    static uint8_t  memPool[3 * 1048576];
 
     HeapInit ( memPool, 2097152 );
@@ -267,7 +267,7 @@ int main ( void )
     assert ( ! HeapFree ( p0 + 1000 ) );
     HeapDone ( &pendingBlk );
     assert ( pendingBlk == 1 );
-    free(memPool);
+//    free(memPool);
     return 0;
 }
 #endif /* __PROGTEST__ */
