@@ -28,6 +28,8 @@ class MemManager {
      uint8_t countDone;
      HeapMemory* tmp;
 
+     HeapMemory tmpOb;
+
     MemManager(){}
 
     void        collectFree         ( HeapMemory* fromAdd,  HeapMemory* toAdd);
@@ -54,8 +56,8 @@ void MemManager::Init(void * memPool, int memSize){
     countDone = 0;
     structSize = sizeof(HeapMemory);
 
-    HeapMemory freeMem = HeapMemory(structSize, memSize - structSize, true, NULL, NULL);
-    memcpy(localMemPool,(uint8_t*) &freeMem, sizeof(freeMem));
+    tmpOb = HeapMemory(structSize, memSize - structSize, true, NULL, NULL);
+    memcpy(localMemPool,(uint8_t*) &tmpOb, structSize);
 }
 
 void * MemManager::Alloc ( int size ){
@@ -65,8 +67,8 @@ void * MemManager::Alloc ( int size ){
         if((*tmp).size >= size && (*tmp).isFree) {
             ///Creates next free node
             if((*tmp).size > size) {
-                HeapMemory next = HeapMemory(tmp->index + size + structSize, tmp->size - size - structSize, true, tmp, NULL);   ///MAYBE +1
-                memcpy(localMemPool + ( *tmp ).index + size, (uint8_t *) &next, sizeof(next));                          ///////problem
+                tmpOb = HeapMemory(tmp->index + size + structSize, tmp->size - size - structSize, true, tmp, NULL);   ///MAYBE +1
+                memcpy(localMemPool + ( *tmp ).index + size, (uint8_t *) &tmpOb, structSize);                          ///////problem
                 tmp->size = size;
                 tmp->next = localMemPool+(*tmp).index+size;
             }
