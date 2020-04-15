@@ -176,13 +176,13 @@ void   HeapDone    ( int  * pendingBlk )
 #ifndef __PROGTEST__
 int main ( void )
 {
-    uint8_t       * p0, *p1, *p2, *p3, *p4;
-    int             pendingBlk;
+//    uint8_t       * p0, *p1, *p2, *p3, *p4;
+//    int             pendingBlk;
     static uint8_t  memPool[3 * 1048576];
 //    uint8_t * memPool = (uint8_t *) calloc (2097152, sizeof(uint8_t));
 //    static uint8_t  memPool[3 * 1048576];
 
-    HeapInit ( memPool, 2097152 );
+   /* HeapInit ( memPool, 2097152 );
     p0 = (uint8_t*) HeapAlloc ( (2097152/2)-32 );
     memset ( p0, 1, (2097152/2)-32 );
     p1 = (uint8_t*) HeapAlloc ( (2097152/2)-32 );
@@ -209,8 +209,8 @@ int main ( void )
     p3 = (uint8_t*) HeapAlloc ( 71 );
     memset ( p3, 1, 71 );
 
-    /*for(int i=0; i < 1020; i++)
-        printf("mm   %i    %i\n", i, memPool[i]);*//*
+    *//*for(int i=0; i < 1020; i++)
+        printf("mm   %i    %i\n", i, memPool[i]);*//**//*
 //    printf("%i %i", p0, p3);
     HeapFree ( p1 );
     HeapFree ( p2 );
@@ -220,7 +220,7 @@ int main ( void )
     HeapFree ( p0 );
     p0 = (uint8_t*) HeapAlloc ( 1 );
     memset ( p0, 0, 2 );
-    HeapFree ( p0 );*/
+    HeapFree ( p0 );*//*
 
 
 
@@ -257,190 +257,7 @@ int main ( void )
     HeapDone ( &pendingBlk );
     assert ( pendingBlk == 0 );
     //////
-    assert ( ( p0 = (uint8_t*) HeapAlloc ( 1000000 ) ) != NULL );
-    memset ( p0, 1, 1000000 );
-    assert ( ( p1 = (uint8_t*) HeapAlloc ( 250000 ) ) != NULL );
-    memset ( p1, 1, 250000 );
-    assert ( ( p2 = (uint8_t*) HeapAlloc ( 250000 ) ) != NULL );
-    memset ( p2, 1, 250000 );
-    assert ( ( p3 = (uint8_t*) HeapAlloc ( 250000 ) ) != NULL );
-    memset ( p3, 1, 250000 );
-    assert ( ( p4 = (uint8_t*) HeapAlloc ( 50000 ) ) != NULL );
-    memset ( p4, 1, 50000 );
-    assert ( HeapFree ( p2 ) );
-    assert ( HeapFree ( p4 ) );
-    assert ( HeapFree ( p3 ) );
-    assert ( HeapFree ( p1 ) );
-    assert ( ( p1 = (uint8_t*) HeapAlloc ( 500000 ) ) != NULL );
-    memset ( p1, 1, 500000 );
-    assert ( HeapFree ( p0 ) );
-    assert ( HeapFree ( p1 ) );
-    HeapDone ( &pendingBlk );
-    assert ( pendingBlk == 0 );
-    assert ( ( p0 = (uint8_t*) HeapAlloc ( 1000000 ) ) != NULL );
-    memset ( p0, 1, 1000000 );
-    assert ( ( p1 = (uint8_t*) HeapAlloc ( 250000 ) ) != NULL );
-    memset ( p1, 1, 250000 );
-    assert ( ( p2 = (uint8_t*) HeapAlloc ( 250000 ) ) != NULL );
-    memset ( p2, 1, 250000 );
-    assert ( ( p3 = (uint8_t*) HeapAlloc ( 250000 ) ) != NULL );
-    memset ( p3, 1, 250000 );
-    assert ( ( p4 = (uint8_t*) HeapAlloc ( 50000 ) ) != NULL );
-    memset ( p4, 1, 50000 );
-    assert ( HeapFree ( p2 ) );
-    assert ( HeapFree ( p4 ) );
-    assert ( HeapFree ( p3 ) );
-    assert ( HeapFree ( p1 ) );
-    assert ( ( p1 = (uint8_t*) HeapAlloc ( 500000 ) ) != NULL );
-    memset ( p1, 1, 500000 );
-    assert ( HeapFree ( p0 ) );
-    assert ( HeapFree ( p1 ) );
-    HeapDone ( &pendingBlk );
-    assert ( pendingBlk == 0 );
-    assert ( ( p0 = (uint8_t*) HeapAlloc ( 1000000 ) ) != NULL );
-    memset ( p0, 1, 1000000 );
-    assert ( ( p1 = (uint8_t*) HeapAlloc ( 250000 ) ) != NULL );
-    memset ( p1, 1, 250000 );
-    assert ( ( p2 = (uint8_t*) HeapAlloc ( 250000 ) ) != NULL );
-    memset ( p2, 1, 250000 );
-    assert ( ( p3 = (uint8_t*) HeapAlloc ( 250000 ) ) != NULL );
-    memset ( p3, 1, 250000 );
-    assert ( ( p4 = (uint8_t*) HeapAlloc ( 50000 ) ) != NULL );
-    memset ( p4, 1, 50000 );
-    assert ( HeapFree ( p2 ) );
-    assert ( HeapFree ( p4 ) );
-    assert ( HeapFree ( p3 ) );
-    assert ( HeapFree ( p1 ) );
-    assert ( ( p1 = (uint8_t*) HeapAlloc ( 500000 ) ) != NULL );
-    memset ( p1, 1, 500000 );
-    assert ( HeapFree ( p0 ) );
-    assert ( HeapFree ( p1 ) );
-    HeapDone ( &pendingBlk );
-    assert ( pendingBlk == 0 );
-    assert ( ( p0 = (uint8_t*) HeapAlloc ( 1000000 ) ) != NULL );
-    memset ( p0, 1, 1000000 );
-    assert ( ( p1 = (uint8_t*) HeapAlloc ( 250000 ) ) != NULL );
-    memset ( p1, 1, 250000 );
-    assert ( ( p2 = (uint8_t*) HeapAlloc ( 250000 ) ) != NULL );
-    memset ( p2, 1, 250000 );
-    assert ( ( p3 = (uint8_t*) HeapAlloc ( 250000 ) ) != NULL );
-    memset ( p3, 1, 250000 );
-    assert ( ( p4 = (uint8_t*) HeapAlloc ( 50000 ) ) != NULL );
-    memset ( p4, 1, 50000 );
-    assert ( HeapFree ( p2 ) );
-    assert ( HeapFree ( p4 ) );
-    assert ( HeapFree ( p3 ) );
-    assert ( HeapFree ( p1 ) );
-    assert ( ( p1 = (uint8_t*) HeapAlloc ( 500000 ) ) != NULL );
-    memset ( p1, 1, 500000 );
-    assert ( HeapFree ( p0 ) );
-    assert ( HeapFree ( p1 ) );
-    HeapDone ( &pendingBlk );
-    assert ( pendingBlk == 0 );
-    assert ( ( p0 = (uint8_t*) HeapAlloc ( 1000000 ) ) != NULL );
-    memset ( p0, 1, 1000000 );
-    assert ( ( p1 = (uint8_t*) HeapAlloc ( 250000 ) ) != NULL );
-    memset ( p1, 1, 250000 );
-    assert ( ( p2 = (uint8_t*) HeapAlloc ( 250000 ) ) != NULL );
-    memset ( p2, 1, 250000 );
-    assert ( ( p3 = (uint8_t*) HeapAlloc ( 250000 ) ) != NULL );
-    memset ( p3, 1, 250000 );
-    assert ( ( p4 = (uint8_t*) HeapAlloc ( 50000 ) ) != NULL );
-    memset ( p4, 1, 50000 );
-    assert ( HeapFree ( p2 ) );
-    assert ( HeapFree ( p4 ) );
-    assert ( HeapFree ( p3 ) );
-    assert ( HeapFree ( p1 ) );
-    assert ( ( p1 = (uint8_t*) HeapAlloc ( 500000 ) ) != NULL );
-    memset ( p1, 1, 500000 );
-    assert ( HeapFree ( p0 ) );
-    assert ( HeapFree ( p1 ) );
-    HeapDone ( &pendingBlk );
-    assert ( pendingBlk == 0 );
-    assert ( ( p0 = (uint8_t*) HeapAlloc ( 1000000 ) ) != NULL );
-    memset ( p0, 1, 1000000 );
-    assert ( ( p1 = (uint8_t*) HeapAlloc ( 250000 ) ) != NULL );
-    memset ( p1, 1, 250000 );
-    assert ( ( p2 = (uint8_t*) HeapAlloc ( 250000 ) ) != NULL );
-    memset ( p2, 1, 250000 );
-    assert ( ( p3 = (uint8_t*) HeapAlloc ( 250000 ) ) != NULL );
-    memset ( p3, 1, 250000 );
-    assert ( ( p4 = (uint8_t*) HeapAlloc ( 50000 ) ) != NULL );
-    memset ( p4, 1, 50000 );
-    assert ( HeapFree ( p2 ) );
-    assert ( HeapFree ( p4 ) );
-    assert ( HeapFree ( p3 ) );
-    assert ( HeapFree ( p1 ) );
-    assert ( ( p1 = (uint8_t*) HeapAlloc ( 500000 ) ) != NULL );
-    memset ( p1, 1, 500000 );
-    assert ( HeapFree ( p0 ) );
-    assert ( HeapFree ( p1 ) );
-    HeapDone ( &pendingBlk );
-    assert ( pendingBlk == 0 );
-    assert ( ( p0 = (uint8_t*) HeapAlloc ( 1000000 ) ) != NULL );
-    memset ( p0, 1, 1000000 );
-    assert ( ( p1 = (uint8_t*) HeapAlloc ( 250000 ) ) != NULL );
-    memset ( p1, 1, 250000 );
-    assert ( ( p2 = (uint8_t*) HeapAlloc ( 250000 ) ) != NULL );
-    memset ( p2, 1, 250000 );
-    assert ( ( p3 = (uint8_t*) HeapAlloc ( 250000 ) ) != NULL );
-    memset ( p3, 1, 250000 );
-    assert ( ( p4 = (uint8_t*) HeapAlloc ( 50000 ) ) != NULL );
-    memset ( p4, 1, 50000 );
-    assert ( HeapFree ( p2 ) );
-    assert ( HeapFree ( p4 ) );
-    assert ( HeapFree ( p3 ) );
-    assert ( HeapFree ( p1 ) );
-    assert ( ( p1 = (uint8_t*) HeapAlloc ( 500000 ) ) != NULL );
-    memset ( p1, 1, 500000 );
-    assert ( HeapFree ( p0 ) );
-    assert ( HeapFree ( p1 ) );
-    HeapDone ( &pendingBlk );
-    assert ( pendingBlk == 0 );
-    assert ( ( p0 = (uint8_t*) HeapAlloc ( 1000000 ) ) != NULL );
-    memset ( p0, 1, 1000000 );
-    assert ( ( p1 = (uint8_t*) HeapAlloc ( 250000 ) ) != NULL );
-    memset ( p1, 1, 250000 );
-    assert ( ( p2 = (uint8_t*) HeapAlloc ( 250000 ) ) != NULL );
-    memset ( p2, 1, 250000 );
-    assert ( ( p3 = (uint8_t*) HeapAlloc ( 250000 ) ) != NULL );
-    memset ( p3, 1, 250000 );
-    assert ( ( p4 = (uint8_t*) HeapAlloc ( 50000 ) ) != NULL );
-    memset ( p4, 1, 50000 );
-    assert ( HeapFree ( p2 ) );
-    assert ( HeapFree ( p4 ) );
-    assert ( HeapFree ( p3 ) );
-    assert ( HeapFree ( p1 ) );
-    assert ( ( p1 = (uint8_t*) HeapAlloc ( 500000 ) ) != NULL );
-    memset ( p1, 1, 500000 );
-    assert ( HeapFree ( p0 ) );
-    assert ( HeapFree ( p1 ) );
-    HeapDone ( &pendingBlk );
-    assert ( pendingBlk == 0 );
-    assert ( ( p0 = (uint8_t*) HeapAlloc ( 1000000 ) ) != NULL );
-    memset ( p0, 1, 1000000 );
-    assert ( ( p1 = (uint8_t*) HeapAlloc ( 250000 ) ) != NULL );
-    memset ( p1, 1, 250000 );
-    assert ( ( p2 = (uint8_t*) HeapAlloc ( 250000 ) ) != NULL );
-    memset ( p2, 1, 250000 );
-    assert ( ( p3 = (uint8_t*) HeapAlloc ( 250000 ) ) != NULL );
-    memset ( p3, 1, 250000 );
-    assert ( ( p4 = (uint8_t*) HeapAlloc ( 50000 ) ) != NULL );
-    memset ( p4, 1, 50000 );
-    assert ( HeapFree ( p2 ) );
-    assert ( HeapFree ( p4 ) );
-    assert ( HeapFree ( p3 ) );
-    assert ( HeapFree ( p1 ) );
-    assert ( ( p1 = (uint8_t*) HeapAlloc ( 500000 ) ) != NULL );
-    memset ( p1, 1, 500000 );
-    assert ( HeapFree ( p0 ) );
-    assert ( HeapFree ( p1 ) );
-    HeapDone ( &pendingBlk );
-    assert ( pendingBlk == 0 );
-    /////////////////
-
-
-
+    
     HeapInit ( memPool, 2359296 );
     assert ( ( p0 = (uint8_t*) HeapAlloc ( 1000000 ) ) != NULL );
     memset ( p0, 0, 1000000 );
@@ -463,9 +280,10 @@ int main ( void )
     memset ( p0, 0, 1000000 );
     assert ( ! HeapFree ( p0 + 1000 ) );
     HeapDone ( &pendingBlk );
-    assert ( pendingBlk == 1 );
+    assert ( pendingBlk == 1 );*/
 //    free(memPool);
     return 0;
 }
 #endif /* __PROGTEST__ */
+
 
