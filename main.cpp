@@ -70,9 +70,7 @@ void * MemManager::Alloc ( int size ){
                 tmp->size = size;
                 tmp->next = localMemPool+(*tmp).index+size;
             }
-            else {
-//                tmp->next = NULL;
-            }
+            
             tmp->isFree = false;
             ++countDone;
             return localMemPool+(*tmp).index;
