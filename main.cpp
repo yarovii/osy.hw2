@@ -8,7 +8,7 @@
 using namespace std;
 #endif /* __PROGTEST__ */
 
-/*struct HeapMemory{
+struct HeapMemory{
     size_t index;   ////store index of free heap
     int size;
     bool isFree;
@@ -19,27 +19,15 @@ using namespace std;
     index(index), size(size), isFree(isFree), prev(prev), next(next) {}
 
     HeapMemory(){}
-};*/
+};
 
 class MemManager {
-    
-    struct HeapMemory{
-        size_t index;   ////store index of free heap
-        int size;
-        bool isFree;
-        HeapMemory * prev;
-        uint8_t * next;
-
-        HeapMemory(size_t index, int size, bool isFree, HeapMemory * prev, uint8_t * next) :
-                index(index), size(size), isFree(isFree), prev(prev), next(next) {}
-
-        HeapMemory(){}
-    };
 
      uint8_t * localMemPool;
      uint8_t structSize;
      uint8_t countDone;
      HeapMemory* tmp;
+     static MemManager* instanceVar;
 
      HeapMemory tmpOb;
 
@@ -50,7 +38,12 @@ class MemManager {
     void        makeNull            ( HeapMemory* m);
 public:
 
-    static  MemManager  &instance ( )   {   static MemManager mm;   return mm;    }
+    static  MemManager  * instance ( void * memPool = 0 )   {
+        if(instanceVar == 0)
+            instanceVar = (MemManager*) memPool;
+
+        return instanceVar;
+    }
 
     void *      Alloc           ( int    size );
     void        Init            ( void * memPool, int memSize);
@@ -59,9 +52,10 @@ public:
     size_t      getCountDone    (  )       { return countDone;}
 
 };
+MemManager* MemManager::instanceVar=0;
 
 void MemManager::Init(void * memPool, int memSize){
-    localMemPool =(uint8_t *) memPool;
+    localMemPool =(uint8_t *) memPool+ sizeof(MemManager);
 
 //    localMemPool[0] = 0;
 //    localMemPool[1] = sizeof(HeapMemory);
@@ -150,7 +144,7 @@ bool    MemManager::Free    ( void * blk ){
 
 void   HeapInit    ( void * memPool, int memSize )
 {
-    MemManager::instance().Init(memPool, memSize);
+    MemManager::instance(memPool)->Init(memPool, memSize);
 }
 
 void * HeapAlloc   ( int    size )
@@ -158,7 +152,7 @@ void * HeapAlloc   ( int    size )
     if(size < 1)
         return NULL;
 
-    return MemManager::instance().Alloc(size);
+    return MemManager::instance()->Alloc(size);
 }
 
 bool   HeapFree    ( void * blk )
@@ -166,23 +160,23 @@ bool   HeapFree    ( void * blk )
     if(blk == NULL)
         return false;
 
-    return MemManager::instance().Free(blk);
+    return MemManager::instance()->Free(blk);
 }
 void   HeapDone    ( int  * pendingBlk )
 {
-    (*pendingBlk) = MemManager::instance().getCountDone();
+    (*pendingBlk) = MemManager::instance()->getCountDone();
 }
 
 #ifndef __PROGTEST__
 int main ( void )
 {
-//    uint8_t       * p0, *p1, *p2, *p3, *p4;
-//    int             pendingBlk;
+    uint8_t       * p0, *p1, *p2, *p3, *p4;
+    int             pendingBlk;
     static uint8_t  memPool[3 * 1048576];
 //    uint8_t * memPool = (uint8_t *) calloc (2097152, sizeof(uint8_t));
 //    static uint8_t  memPool[3 * 1048576];
 
-   /* HeapInit ( memPool, 2097152 );
+    HeapInit ( memPool, 2097152 );
     p0 = (uint8_t*) HeapAlloc ( (2097152/2)-32 );
     memset ( p0, 1, (2097152/2)-32 );
     p1 = (uint8_t*) HeapAlloc ( (2097152/2)-32 );
@@ -209,7 +203,7 @@ int main ( void )
     p3 = (uint8_t*) HeapAlloc ( 71 );
     memset ( p3, 1, 71 );
 
-    *//*for(int i=0; i < 1020; i++)
+    /*for(int i=0; i < 1020; i++)
         printf("mm   %i    %i\n", i, memPool[i]);*//**//*
 //    printf("%i %i", p0, p3);
     HeapFree ( p1 );
@@ -220,7 +214,7 @@ int main ( void )
     HeapFree ( p0 );
     p0 = (uint8_t*) HeapAlloc ( 1 );
     memset ( p0, 0, 2 );
-    HeapFree ( p0 );*//*
+    HeapFree ( p0 );*/
 
 
 
@@ -257,7 +251,7 @@ int main ( void )
     HeapDone ( &pendingBlk );
     assert ( pendingBlk == 0 );
     //////
-    
+
     HeapInit ( memPool, 2359296 );
     assert ( ( p0 = (uint8_t*) HeapAlloc ( 1000000 ) ) != NULL );
     memset ( p0, 0, 1000000 );
@@ -280,10 +274,9 @@ int main ( void )
     memset ( p0, 0, 1000000 );
     assert ( ! HeapFree ( p0 + 1000 ) );
     HeapDone ( &pendingBlk );
-    assert ( pendingBlk == 1 );*/
+    assert ( pendingBlk == 1 );
 //    free(memPool);
     return 0;
 }
 #endif /* __PROGTEST__ */
-
 
