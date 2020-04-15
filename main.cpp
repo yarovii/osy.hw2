@@ -64,13 +64,16 @@ void * MemManager::Alloc ( int size ){
     while(true){
         if((*tmp).size >= size && (*tmp).isFree) {
             ///Creates next free node
-            HeapMemory next = HeapMemory(tmp->index+size+structSize, tmp->size-size-structSize, true, tmp, NULL);   ///MAYBE +1
-            memcpy(localMemPool+(*tmp).index+size,(uint8_t*) &next, sizeof(next));
-
+            if((*tmp).size > size) {
+                HeapMemory next = HeapMemory(tmp->index + size + structSize, tmp->size - size - structSize, true, tmp, NULL);   ///MAYBE +1
+                memcpy(localMemPool + ( *tmp ).index + size, (uint8_t *) &next, sizeof(next));                          ///////problem
+                tmp->size = size;
+                tmp->next = localMemPool+(*tmp).index+size;
+            }
+            else {
+//                tmp->next = NULL;
+            }
             tmp->isFree = false;
-            tmp->size = size;
-            tmp->next = localMemPool+(*tmp).index+size;                   ///////
-
             ++countDone;
             return localMemPool+(*tmp).index;
         }
@@ -90,8 +93,8 @@ void    MemManager::collectFree(HeapMemory* fromAdd,  HeapMemory* toAdd){
 }
 
 void    MemManager::collectFreeAll ( HeapMemory* prev,  HeapMemory* now, HeapMemory* next) {
-    if(prev->isFree && next->isFree){
-        prev->size += now->size + next->size + structSize + structSize;
+    if(prev->isFree && next->isFree){                                                       //////problem
+        prev->size += now->size + next->size + structSize + structSize;                     //////problem
         prev->next = next->next;
 
         makeNull(next);
@@ -166,7 +169,7 @@ int main ( void )
     uint8_t * memPool = (uint8_t *) calloc (2097152, sizeof(uint8_t));
 //    static uint8_t  memPool[3 * 1048576];
 
-    HeapInit ( memPool, 2097152 );
+   /* HeapInit ( memPool, 2097152 );
     p0 = (uint8_t*) HeapAlloc ( (2097152/2)-32 );
     p1 = (uint8_t*) HeapAlloc ( (2097152/2)-32 );
 //    printf("%i %i", p0, p1);
@@ -189,8 +192,8 @@ int main ( void )
     p3 = (uint8_t*) HeapAlloc ( 71 );
     memset ( p3, 1, 71 );
 
-    /*for(int i=0; i < 1020; i++)
-        printf("mm   %i    %i\n", i, memPool[i]);*/
+    *//*for(int i=0; i < 1020; i++)
+        printf("mm   %i    %i\n", i, memPool[i]);*//*
 //    printf("%i %i", p0, p3);
     HeapFree ( p1 );
     HeapFree ( p2 );
@@ -200,7 +203,7 @@ int main ( void )
     HeapFree ( p0 );
     p0 = (uint8_t*) HeapAlloc ( 1 );
     memset ( p0, 0, 2 );
-    HeapFree ( p0 );
+    HeapFree ( p0 );*/
 
 
 
