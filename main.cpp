@@ -66,7 +66,8 @@ public:
 
 void MemManager::Init(void * memPool, int memSize){
 //    printf("%i\n", sizeof(MemManager));
-    localMemPool =(uint8_t *) memPool + sizeof(MemManager);
+//    localMemPool =(uint8_t *) memPool + sizeof(MemManager);
+    localMemPool =(uint8_t *) memPool;
 //    printf("%i\n", sizeof(MemManager));
 
     countDone = 0;
