@@ -31,7 +31,7 @@ class MemManager {
      uint8_t structSize;
      size_t countDone=0;
      HeapMemory* tmp;
-//     static MemManager* instanceVar;
+     static MemManager* instanceVar;
 
      HeapMemory tmpOb;
 
@@ -42,18 +42,18 @@ class MemManager {
     void        makeNull            ( HeapMemory* m);
 public:
 
-    /*static  MemManager  * instance ( void * memPool = 0 )   {
+    static  MemManager  * instance ( void * memPool = 0 )   {
         if(instanceVar == 0)
             instanceVar = (MemManager*) memPool;
 
         return instanceVar;
-    }*/
-    static MemManager& getInstance()
+    }
+    /*static MemManager& getInstance()
     {
         static MemManager    instance; // Guaranteed to be destroyed.
         // Instantiated on first use.
         return instance;
-    }
+    }*/
 
     void *      Alloc           ( int    size );
     void        Init            ( void * memPool, int memSize);
@@ -62,13 +62,11 @@ public:
     size_t      getCountDone    (  )       { return countDone;}
 
 };
-//MemManager* MemManager::instanceVar=0;
+MemManager* MemManager::instanceVar=0;
 
 void MemManager::Init(void * memPool, int memSize){
-//    printf("%i\n", sizeof(MemManager));
-//    localMemPool =(uint8_t *) memPool + sizeof(MemManager);
-    localMemPool =(uint8_t *) memPool;
-//    printf("%i\n", sizeof(MemManager));
+    localMemPool =(uint8_t *) memPool + sizeof(MemManager);
+//    localMemPool =(uint8_t *) memPool;
 
     countDone = 0;
     structSize = sizeof(HeapMemory);
@@ -154,8 +152,8 @@ bool    MemManager::Free    ( void * blk ){
 
 void   HeapInit    ( void * memPool, int memSize )
 {
-    MemManager::getInstance().Init(memPool, memSize);
-//    MemManager::instance(memPool)->Init(memPool, memSize);
+//    MemManager::getInstance().Init(memPool, memSize);
+    MemManager::instance(memPool)->Init(memPool, memSize);
 }
 
 void * HeapAlloc   ( int    size )
@@ -163,8 +161,8 @@ void * HeapAlloc   ( int    size )
     if(size < 1)
         return NULL;
 
-    return MemManager::getInstance().Alloc(size);
-//    return MemManager::instance()->Alloc(size);
+//    return MemManager::getInstance().Alloc(size);
+    return MemManager::instance()->Alloc(size);
 }
 
 bool   HeapFree    ( void * blk )
@@ -174,13 +172,13 @@ bool   HeapFree    ( void * blk )
 
 
 
-    return MemManager::getInstance().Free(blk);
-//    return MemManager::instance()->Free(blk);
+//    return MemManager::getInstance().Free(blk);
+    return MemManager::instance()->Free(blk);
 }
 void   HeapDone    ( int  * pendingBlk )
 {
-    (*pendingBlk) = MemManager::getInstance().getCountDone();
-//    (*pendingBlk) = MemManager::instance()->getCountDone();
+//    (*pendingBlk) = MemManager::getInstance().getCountDone();
+    (*pendingBlk) = MemManager::instance()->getCountDone();
 }
 
 #ifndef __PROGTEST__
